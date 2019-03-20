@@ -1,1 +1,161 @@
+html *
+{
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-weight: lighter;
+letter-spacing: 1.4px;
+text-align: center;
+}
 
+body
+{
+  margin: 0px 0px 0px 0px;
+}
+
+.header-title
+{
+  background-color: #292929;
+  color: white;
+  padding: 10px 0px;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.home_button
+{
+  font-size: 16px;
+  padding: 4px 7px;
+  margin: 0px 0px 0px 0px;
+  background-color: #0057e5;
+  color: white;
+  border: 2px;
+  border-radius: 6px;
+  border-color: #0057e5;
+  border-style: solid;
+  display:inline-block;
+}
+
+.home_button:hover
+{
+  font-size: 16px;
+  padding: 4px 7px;
+  margin: 0px 0px 0px 0px;
+  background-color: #013eaf;
+  color: white;
+  border: 2px;
+  border-radius: 6px;
+  border-color: #0057e5;
+  border-style: solid;
+  display:inline-block;
+}
+
+ul
+{
+  margin:0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+li
+{
+  margin:0 auto;
+  list-style-type: none;
+  list-style: none;
+  padding: 1px;
+}
+
+.list-item-active
+{
+  background-color: #0057e5;
+  color: white;
+  padding: 7px 200px;
+  width: 200px;
+  max-width: 200px;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px;
+  border-color: #0057e5;
+  border-radius: 4px;
+  border-style: solid;
+}
+
+.list-item
+{
+  background-color: #ffffff;
+  color: black;
+  padding: 7px 200px;
+  width: 200px;
+  max-width: 200px;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #292929;
+  border-style: solid;
+}
+
+.list-item:hover
+{
+  background-color: #0057e5;
+  color: white;
+  padding: 7px 200px;
+  width: 200px;
+  max-width: 200px;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #4286f4;
+  border-style: solid;
+}
+
+.delete-button
+{
+  background-color: #e50931;
+  color: white;
+  padding: 6px 18px;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #e50931;
+  border-style: solid;
+}
+
+.delete-button:hover
+{
+  background-color: #9e0000;
+  color: white;
+  padding: 6px 18px;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #9e0000;
+  border-style: solid;
+}
+
+.success-msg
+{
+  background-color: #16c95a;
+  color: white;
+  padding: 6px 18px;
+  text-decoration: none;
+  display: block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #16c95a;
+  border-style: solid;
+}
+.error-msg
+{
+  background-color: #e02900;
+  color: white;
+  padding: 6px 18px;
+  text-decoration: none;
+  display: block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #e02900;
+  border-style: solid;
+}
