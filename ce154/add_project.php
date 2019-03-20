@@ -21,7 +21,7 @@ if (!isset($_GET['create_project_button']) && empty($_GET['create_project_button
 <body>
 <div class="container">
 	<div class="header">
-		<h1 class="header">
+		<h1 class="header-title">
 			Events Management System
 		</h1>
 	</div>
