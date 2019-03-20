@@ -98,8 +98,8 @@ require ('db_connect.php');
 		{
 			echo "<h2>Create a project</h2>";
 			echo '<form action="add_project.php">
-			<input type="text" name="project_name" placeholder="Type a project name">
-			<input type="submit" name="create_project_button" value="Create Project">
+			<input type="text" minlength=2 name="project_name" placeholder="Type a project name">
+			<input type="submit" name="create_project_button" value="Create Project" onclick="return checkNameLength();">
 			</form>';
 		}
 		?>
@@ -110,5 +110,24 @@ require ('db_connect.php');
 	</div>
 
 </div>
+<!-- Javascript Starts here -->
+<script>
+// Check if the project name is too short. Above we put the minlength attribute in code but this is only HTML5 supported and is not supported by older-browsers
+// so just in case if the user is using a older browser that does not support HTML5 we will also check the name length via javascript.
+function checkNameLength()
+{
+	var projectName = document.getElementsByName("project_name")[0].value;
+	if(projectName.length < 2)
+	{
+		alert("The project name needs to be atleast 2 characters long.");
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+</script>
+<!-- Javascript Ends here -->
 </body>
 </html>
