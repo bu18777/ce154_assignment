@@ -97,6 +97,9 @@ require ('db_connect.php');
 		else
 		{
 			echo "<h2>Create a project</h2>";
+			// In case you are wondering why onclick="return checkNameLength();",
+			// lets say we wrote onclick="return false" here the onclick function returns instantly false before the submit() function gets called,
+			// so this prevents the submit() function from being called, and we return this value from our javascript function depending on the namelength.
 			echo '<form action="add_project.php">
 			<input type="text" minlength=2 name="project_name" placeholder="Type a project name">
 			<input type="submit" name="create_project_button" value="Create Project" onclick="return checkNameLength();">
