@@ -1,7 +1,8 @@
 <?php
 require ('db_connect.php');
 
-if (!isset($_GET['project_id']) && empty($_GET['project_id'])) {
+if (!isset($_GET['project_id']) && empty($_GET['project_id']))
+{
 	header('Location: index.php');
 	die();
 }
@@ -24,31 +25,32 @@ if (!isset($_GET['project_id']) && empty($_GET['project_id'])) {
 			Events Management System
 		</h1>
 	</div>
-	
+
 	<div class="left">
 		<p>
 			Area for buttons
 		</p>
 	</div>
-	
+
 	<div class="content">
 		<?php
 			$project_id = $_GET['project_id'];
-			
+
 			$sql = "DELETE FROM events WHERE id = '{$project_id}'";
 			$result = mysqli_query($link,$sql);
-			
-			if ($result) {
-				echo "<h2>Project successfully deleted</h2>";
+
+			if ($result)
+			{
+				echo "<h2 class='success-msg'>✅Project successfully deleted</h2>";
 			}
-			else {
-				echo "<h2>Could not delete project</h2>";
+			else
+			{
+				echo "<h2 class='error-msg'>⚠Could not delete project</h2>";
 			}
-			
-			echo "<a href='index.php'>Return to homepage</a>";
+			echo "<a href='index.php' class='home_button'>🏠Return to homepage</a>";
 		?>
 	</div>
-	
+
 	<div class="footer">
 		This is a footer which also goes right across the page.
 	</div>
