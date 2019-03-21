@@ -97,6 +97,37 @@ require ('db_connect.php');
 					echo "<input type='submit' value='Create Task' name='submit'>";
 					echo "</form>";
 					
+					echo "<table>";
+					echo "<tr>";
+					echo "<th>Task Name</th>";
+					echo "<th>Priority</th>";
+					echo "<th>Due Date</th>";
+					echo "<th>Update Task</th>";
+					echo "<th>Delete Task</th>";
+					echo "</tr>";
+					
+					$fetch = "SELECT * FROM tasks WHERE event_id = '{$_GET['project_id']}'";
+					$tasksresult = mysqli_query($link,$fetch);
+					
+					if ($tasksresult){
+						if (mysqli_num_rows($tasksresult) > 0){
+							while($row2 = mysqli_fetch_assoc($tasksresult)){
+								echo "<tr>";
+								echo "<td>" .$row2['name'] . "</td>";
+								echo "<td>" .$row2['priority'] . "</td>";
+								echo "<td>" .$row2['date'] . "</td>";
+								echo "<td> <a href='update_task.php?id='{$row2['id']}'>Update Task</a></td>";
+								echo "<td> <a href='delete_task.php?id='{$row2['id']}'>Delete Task</a></td>";
+								echo "</tr>";
+							}
+						}
+					}
+					else {
+						echo "No tasks found for this project";
+					}
+					
+					echo "</table>";
+					
 					echo "<a href='delete_project.php?project_id=" . $row['id'] . "' type='button' class='delete-button'>❌Delete project</a>"; //echo "<a href='delete_project.php?project_id={$row['id']}'>Delete project</a>";
 				}
 				else

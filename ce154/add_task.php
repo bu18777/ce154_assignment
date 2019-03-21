@@ -27,23 +27,61 @@ if (!isset($_GET['submit']) && empty($_GET['submit']))
 	</div>
 
 	<div class="left">
-		<p>
-			Area for buttons
-		</p>
+		<?php
+			$sql = "SELECT * FROM events";
+			$result = mysqli_query($link,$sql);
+
+			if ($result)
+			{
+				if (mysqli_num_rows($result) > 0)
+				{
+					// Check if we are viewing the Homepage or a project.
+					if(isset($_GET['project_id']))
+					{
+						// If we are in a project display the home button.
+						echo '<a href="index.php" class="home_button">ğ Home</a>'; //echo "<li><a href='index.php'>Create a project</a>";
+					}
+					echo "<ul>";
+					while ($row = mysqli_fetch_assoc($result))
+					{
+						// Check if we are viewing the Homepage or a project.
+						if(isset($_GET['project_id']))
+						{
+							// Check if this is the current project that we are viewing.
+							if($_GET['project_id'] == $row['id'])
+							{
+								// If it is then assign the active class.
+								echo "<li>" . '<a href="#" class="list-item-active">' . $row['name'] . '</a>' . "</li>";//echo "<li>" . "<a href='index.php?project_id={$row['id']}'>{$row['name']}</a>" . "</li>";
+							}
+							else
+							{
+								// If not assign a normal item class.
+								echo "<li>" . '<a href="index.php?project_id=' . $row['id'] . '" class="list-item">' . $row['name'] . '</a>'. "</li>";
+							}
+						}
+						else
+						{
+								// We are viewing the homepage, print as a normal item.
+								echo "<li>" . '<a href="index.php?project_id=' . $row['id'] . '" class="list-item">' . $row['name'] . '</a>'. "</li>";//echo "<li>" . "<a href='index.php?project_id={$row['id']}'>{$row['name']}</a>" . "</li>";
+						}
+					}
+					echo "</ul>";
+				}
+			}
+		mysqli_free_result($result);
+		?>
 	</div>
 
 	<div class="content">
 		<?php
-			echo "Step 1</br>";
-			if (isset($_GET['name']) && !empty($_GET['name']) && isset($_GET['priority']) && !empty($_GET['priority']) && isset($_GET['date']) && !empty($_GET['date']))
-			{
-				echo "Step 2</br>";
+		
+			if (isset($_GET['name']) && !empty($_GET['name']) && isset($_GET['Priority']) && !empty($_GET['Priority']) && isset($_GET['date']) && !empty($_GET['date'])){
+			
 				$date = date("Y-m-d H:i:s", strtotime($_GET['date']));
-				echo "Step 3 - date: " . $date . "</br>";
-				$sql = "INSERT INTO tasks VALUES (DEFAULT, '" .$_GET['name'] . "', '" . $_GET['priority'] . "', '" . $date . "', '" . $_GET['project_id'] . "')";
-				echo "Step 4 - Query Command:" . $sql . "</br>";
+				$sql = "INSERT INTO tasks VALUES (DEFAULT, '{$_GET['name']}', '{$_GET['Priority']}', '{$date}', '{$_GET['project_id']}')";
 				$query = mysqli_query($link,$sql);
-				echo "Query Result:" . $query;
+			
+			
 				if ($query)
 				{
 					echo "Successfully added new task to Project: " . $_GET['project_id'];
@@ -53,10 +91,9 @@ if (!isset($_GET['submit']) && empty($_GET['submit']))
 					echo "<p class='error-msg'>⚠Error occured: ". mysqli_error($link) . "</p>";
 				}
 			}
-				else {
-					echo "Some of the firstt checks failed.</br>";
-			}
-			echo "<a href='index.php' class='home_button'>🏠Return to homepage</a>";
+
+
+			echo "<br><a href='index.php' class='home_button'>🏠Return to homepage</a>";
 		?>
 	</div>
 
