@@ -81,6 +81,22 @@ require ('db_connect.php');
 				{
 					$row = mysqli_fetch_assoc($result);
 					echo "<h2>Current Project: {$row['name']}</h2>";
+					echo "<h3>Create a Task</h3>";
+					echo "<form method='get' action='add_task.php'>";
+					echo "Task Name: <input type='text' name='name' placeholder='Task Name'>";
+					echo "<br>";
+					echo "Priority: <select name='Priority'>";
+					echo "<option value='Low'>Low</option>";
+					echo "<option value='Medium'>Medium</option>";
+					echo "<option value='High'>High</option>";
+					echo "</select>";
+					echo "<br>";
+					echo "Due date: <input type='datetime-local' name='date'>";
+					echo "<br>";
+					echo "<input type='hidden' name='project_id' value='" . $_GET['project_id']."'/>";
+					echo "<input type='submit' value='Create Task' name='submit'>";
+					echo "</form>";
+					
 					echo "<a href='delete_project.php?project_id=" . $row['id'] . "' type='button' class='delete-button'>❌Delete project</a>"; //echo "<a href='delete_project.php?project_id={$row['id']}'>Delete project</a>";
 				}
 				else
