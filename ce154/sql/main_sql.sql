@@ -11,7 +11,7 @@ CREATE TABLE tasks (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(120),
 	priority ENUM("Low","Medium","High"),
-	date DATETIME,
+	date DATE,
 	event_id INT,
 	FOREIGN KEY (event_id) REFERENCES events(id)
 );
