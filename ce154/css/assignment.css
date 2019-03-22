@@ -205,3 +205,16 @@ li
   border-color: #04a542;
   border-style: solid;
 }
+
+.create-project-button:hover
+{
+  background-color: #07913B;
+  color: white;
+  padding: 6px 18px;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #07913B;
+  border-style: solid;
+}
