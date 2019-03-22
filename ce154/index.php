@@ -36,8 +36,7 @@ require ('db_connect.php');
 						// If we are in a project display the home button.
 						echo '<a href="index.php" class="home_button">🏠Home</a>'; //echo "<li><a href='index.php'>Create a project</a>";
 					}
-					else
-					{
+					else {
 					echo "<ul>";
 					while ($row = mysqli_fetch_assoc($result))
 					{
@@ -99,7 +98,7 @@ require ('db_connect.php');
 					echo "<input type='hidden' name='project_id' value='" . $_GET['project_id']."'/>";
 					echo "<input type='submit' value='Create Task' name='submit'>";
 					echo "</form>";
-
+					
 					echo "<table>";
 					echo "<tr>";
 					echo "<th>Task Name</th>";
@@ -108,10 +107,10 @@ require ('db_connect.php');
 					echo "<th>Update Task</th>";
 					echo "<th>Delete Task</th>";
 					echo "</tr>";
-
+					
 					$fetch = "SELECT * FROM tasks WHERE event_id = '{$_GET['project_id']}'";
 					$tasksresult = mysqli_query($link,$fetch);
-
+					
 					if ($tasksresult){
 						if (mysqli_num_rows($tasksresult) > 0){
 							while($row2 = mysqli_fetch_assoc($tasksresult)){
@@ -119,8 +118,8 @@ require ('db_connect.php');
 								echo "<td>" .$row2['name'] . "</td>";
 								echo "<td>" .$row2['priority'] . "</td>";
 								echo "<td>" .$row2['date'] . "</td>";
-								echo "<td> <a href='update_task.php?id='{$row2['id']}'>Update Task</a></td>";
-								echo "<td> <a href='delete_task.php?id='{$row2['id']}'>Delete Task</a></td>";
+								echo "<td>" . "<a href='update_task.php?id={$row2['id']}'>Update Task</a>" . "</td>";
+								echo "<td>" . "<a href='delete_task.php?id={$row2['id']}'>Delete Task</a>" . "</td>";
 								echo "</tr>";
 							}
 						}
@@ -128,9 +127,9 @@ require ('db_connect.php');
 					else {
 						echo "No tasks found for this project";
 					}
-
+					
 					echo "</table>";
-
+					
 					echo "<a href='delete_project.php?project_id=" . $row['id'] . "' type='button' class='delete-button'>❌Delete project</a>"; //echo "<a href='delete_project.php?project_id={$row['id']}'>Delete project</a>";
 				}
 				else

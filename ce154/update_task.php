@@ -1,7 +1,7 @@
 <?php
 require ('db_connect.php');
 
-if (!isset($_GET['project_id']) && empty($_GET['project_id']))
+if (!isset($_GET['id']) && empty($_GET['id']))
 {
 	header('Location: index.php');
 	die();
@@ -41,7 +41,6 @@ if (!isset($_GET['project_id']) && empty($_GET['project_id']))
 						// If we are in a project display the home button.
 						echo '<a href="index.php" class="home_button">ğ Home</a>'; //echo "<li><a href='index.php'>Create a project</a>";
 					}
-					else {
 					echo "<ul>";
 					while ($row = mysqli_fetch_assoc($result))
 					{
@@ -67,7 +66,6 @@ if (!isset($_GET['project_id']) && empty($_GET['project_id']))
 						}
 					}
 					echo "</ul>";
-					}
 				}
 			}
 		mysqli_free_result($result);
@@ -76,40 +74,41 @@ if (!isset($_GET['project_id']) && empty($_GET['project_id']))
 
 	<div class="content">
 		<?php
-			$project_id = $_GET['project_id'];
+		
+			$sql = "SELECT * FROM tasks WHERE id = '{$_GET['id']}'";
+			$result = mysqli_query($link,$sql);
 			
-			$checktasks = "SELECT * FROM tasks WHERE event_id = '{$project_id}'";
-			$checkresult = mysqli_query($link,$checktasks);
-			
-			if ($checkresult){
-				if (mysqli_num_rows($checkresult) > 0){
-					$deletetasks = "DELETE FROM tasks WHERE '{$project_id}'";
-					$deleteresults = mysqli_query ($link,$deletetasks);
-					
-					if ($deleteresults){
-						$sql = "DELETE FROM events WHERE id = '{$project_id}'";
-						$result = mysqli_query($link,$sql);
-
-						if ($result)
-						{
-							echo "<h2 class='success-msg'>✅Project successfully deleted</h2>";
-						}
-						else
-						{
-							echo "<h2 class='error-msg'>⚠Could not delete project</h2>";
-						}
+			if ($result){
+				if (mysqli_num_rows($result) == 1) {
+					while ($row = mysqli_fetch_assoc($result)){
+						$date = date('Y-m-d\TH:i',strtotime($row['date']));
+						
+						echo "<h3>Update a Task</h3>";
+						echo "<form method='get' action='edit.php'>";
+						echo "Task Name: <input type='text' name='name' value='{$row['name']}'>";
+						echo "<br>";
+						echo "Priority: <select name='Priority'>";
+						echo "<option value='Low'>Low</option>";
+						echo "<option value='Medium'>Medium</option>";
+						echo "<option value='High'>High</option>";
+						echo "</select>";
+						echo "<br>";
+						echo "Due date: <input type='datetime-local' name='{$date}'>";
+						echo "<br>";
+						echo "<input type='hidden' name='task_id' value='" . $row['id']."'/>";
+						echo "<input type='submit' value='Update Task' name='submit'>";
+						echo "</form>";
 					}
-					else {
-						echo "Could not delete tasks and project.";
-					}
+				}
+				else {
+					echo "Task does not exist";
 				}
 			}
-				else {
-					echo "Could not fetch results";
-				}
+			else {
+				echo "Could not execute the query.";
+			}
 
-			
-			echo "<a href='index.php' class='home_button'>🏠Return to homepage</a>";
+			echo "<br><a href='index.php' class='home_button'>🏠Return to homepage</a>";
 		?>
 	</div>
 

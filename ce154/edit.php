@@ -1,7 +1,7 @@
 <?php
 require ('db_connect.php');
 
-if (!isset($_GET['project_id']) && empty($_GET['project_id']))
+if (!isset($_GET['submit']) && empty($_GET['submit']))
 {
 	header('Location: index.php');
 	die();
@@ -41,7 +41,6 @@ if (!isset($_GET['project_id']) && empty($_GET['project_id']))
 						// If we are in a project display the home button.
 						echo '<a href="index.php" class="home_button">ğ Home</a>'; //echo "<li><a href='index.php'>Create a project</a>";
 					}
-					else {
 					echo "<ul>";
 					while ($row = mysqli_fetch_assoc($result))
 					{
@@ -67,7 +66,6 @@ if (!isset($_GET['project_id']) && empty($_GET['project_id']))
 						}
 					}
 					echo "</ul>";
-					}
 				}
 			}
 		mysqli_free_result($result);
@@ -76,40 +74,26 @@ if (!isset($_GET['project_id']) && empty($_GET['project_id']))
 
 	<div class="content">
 		<?php
-			$project_id = $_GET['project_id'];
+		
+			if (isset($_GET['task_id']) && !empty($_GET['task_id']) && isset($_GET['name']) && !empty($_GET['name']) && isset($_GET['Priority']) && !empty($_GET['Priority']) && isset($_GET['date']) && !empty($_GET['date'])){
 			
-			$checktasks = "SELECT * FROM tasks WHERE event_id = '{$project_id}'";
-			$checkresult = mysqli_query($link,$checktasks);
+				$date = date("Y-m-d H:i:s", strtotime($_GET['date']));
+				$sql = "UPDATE tasks SET name ='{$_GET['name']}', priority ='{$_GET['priority']}', date ='{$date}' WHERE id = '{$_GET['task_id']}' ";
+				$query = mysqli_query($link,$sql);
 			
-			if ($checkresult){
-				if (mysqli_num_rows($checkresult) > 0){
-					$deletetasks = "DELETE FROM tasks WHERE '{$project_id}'";
-					$deleteresults = mysqli_query ($link,$deletetasks);
-					
-					if ($deleteresults){
-						$sql = "DELETE FROM events WHERE id = '{$project_id}'";
-						$result = mysqli_query($link,$sql);
-
-						if ($result)
-						{
-							echo "<h2 class='success-msg'>✅Project successfully deleted</h2>";
-						}
-						else
-						{
-							echo "<h2 class='error-msg'>⚠Could not delete project</h2>";
-						}
-					}
-					else {
-						echo "Could not delete tasks and project.";
-					}
+			
+				if ($query)
+				{
+					echo "Successfully updated the task: " . $_GET['name'];
+				}
+				else
+				{
+					echo "<p class='error-msg'>⚠Error occured: ". mysqli_error($link) . "</p>";
 				}
 			}
-				else {
-					echo "Could not fetch results";
-				}
 
-			
-			echo "<a href='index.php' class='home_button'>🏠Return to homepage</a>";
+
+			echo "<br><a href='index.php' class='home_button'>🏠Return to homepage</a>";
 		?>
 	</div>
 
