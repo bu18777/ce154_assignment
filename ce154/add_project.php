@@ -1,11 +1,6 @@
 <?php
 require ('db_connect.php');
 
-if (!isset($_GET['create_project_button']) && empty($_GET['create_project_button']))
-{
-	header('Location: index.php');
-	die();
-}
 
 ?>
 
@@ -26,14 +21,10 @@ if (!isset($_GET['create_project_button']) && empty($_GET['create_project_button
 		</h1>
 	</div>
 
-	<div class="left">
-		<p>
-			Area for buttons
-		</p>
-	</div>
-
 	<div class="content">
 		<?php
+		if(isset($_GET['create_project_button']) && !empty($_GET['create_project_button']) && isset($_GET['project_name']))
+		{
 			$project = $_GET['project_name'];
 
 			$sql = "INSERT INTO events VALUES (DEFAULT, '{$project}')";
@@ -47,7 +38,11 @@ if (!isset($_GET['create_project_button']) && empty($_GET['create_project_button
 			{
 				echo "<h2 class='success-msg'>✅Project was successfully created</h2>";
 			}
-
+		}
+		else
+		{
+				echo "<h2 class='error-msg'>⚠Some of the get parameters in the url are missing..</h2>";
+		}
 
 			echo "<a href='index.php' class='home_button'>🏠Return to homepage</a>";
 		?>

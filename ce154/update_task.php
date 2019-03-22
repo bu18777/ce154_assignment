@@ -1,11 +1,6 @@
 <?php
 require ('db_connect.php');
 
-if (!isset($_GET['id']) && empty($_GET['id']))
-{
-	header('Location: index.php');
-	die();
-}
 
 ?>
 
@@ -17,6 +12,7 @@ if (!isset($_GET['id']) && empty($_GET['id']))
 	<meta charset="UTF-8" />
 	<title>Events Management System</title>
 	<link rel="stylesheet" href="css/assignment.css">
+	<link rel="stylesheet" href="css/create-task.css">
 </head>
 <body>
 <div class="container">
@@ -26,78 +22,55 @@ if (!isset($_GET['id']) && empty($_GET['id']))
 		</h1>
 	</div>
 
-	<div class="left">
-		<?php
-			$sql = "SELECT * FROM events";
-			$result = mysqli_query($link,$sql);
-
-			if ($result)
-			{
-				if (mysqli_num_rows($result) > 0)
-				{
-					// Check if we are viewing the Homepage or a project.
-					if(isset($_GET['project_id']))
-					{
-						// If we are in a project display the home button.
-						echo '<a href="index.php" class="home_button">ğ Home</a>'; //echo "<li><a href='index.php'>Create a project</a>";
-					}
-					echo "<ul>";
-					while ($row = mysqli_fetch_assoc($result))
-					{
-						// Check if we are viewing the Homepage or a project.
-						if(isset($_GET['project_id']))
-						{
-							// Check if this is the current project that we are viewing.
-							if($_GET['project_id'] == $row['id'])
-							{
-								// If it is then assign the active class.
-								echo "<li>" . '<a href="#" class="list-item-active">' . $row['name'] . '</a>' . "</li>";//echo "<li>" . "<a href='index.php?project_id={$row['id']}'>{$row['name']}</a>" . "</li>";
-							}
-							else
-							{
-								// If not assign a normal item class.
-								echo "<li>" . '<a href="index.php?project_id=' . $row['id'] . '" class="list-item">' . $row['name'] . '</a>'. "</li>";
-							}
-						}
-						else
-						{
-								// We are viewing the homepage, print as a normal item.
-								echo "<li>" . '<a href="index.php?project_id=' . $row['id'] . '" class="list-item">' . $row['name'] . '</a>'. "</li>";//echo "<li>" . "<a href='index.php?project_id={$row['id']}'>{$row['name']}</a>" . "</li>";
-						}
-					}
-					echo "</ul>";
-				}
-			}
-		mysqli_free_result($result);
-		?>
-	</div>
 
 	<div class="content">
 		<?php
-		
+		if (isset($_GET['id'])  && isset($_GET['project_id']))
+		{
 			$sql = "SELECT * FROM tasks WHERE id = '{$_GET['id']}'";
 			$result = mysqli_query($link,$sql);
-			
+
 			if ($result){
 				if (mysqli_num_rows($result) == 1) {
-					while ($row = mysqli_fetch_assoc($result)){
-						$date = date('Y-m-d\TH:i',strtotime($row['date']));
-						
-						echo "<h3>Update a Task</h3>";
-						echo "<form method='get' action='edit.php'>";
-						echo "Task Name: <input type='text' name='name' value='{$row['name']}'>";
+					while ($row = mysqli_fetch_assoc($result))
+					{
+						$date = date('Y-m-d',strtotime($row['date']));
+
+						echo "</br><form method='get' action='edit.php' class='create-task-border'>";
+						echo "<h3 class='create-task-header'>Update a Task</h3>";
+						echo "<div class='create-task-labels'>Task Name: <input type='text' name='name' class='create-task-inputs' placeholder='Task Name' value=".$row['name']."> </div>";
+						echo "<div class='create-task-labels'>Priority: <select name='Priority' class='create-task-inputs'>";
+						if($row['priority'] === "Low")
+						{
+							echo "<option value='Low' selected>Low</option>";
+						}
+						else
+						{
+							echo "<option value='Low'>Low</option>";
+						}
+						if($row['priority'] === "Medium")
+						{
+							echo "<option value='Medium' selected>Medium</option>";
+						}
+						else
+						{
+							echo "<option value='Medium'>Medium</option>";
+						}
+						if($row['priority'] === "High")
+						{
+							echo "<option value='High' selected>High</option>";
+						}
+						else
+						{
+							echo "<option value='High'>High</option>";
+						}
+						echo "</select></div>";
+						echo "<div class='create-task-labels'>Due date: <input type='date' name='date' class='create-task-inputs' value=".$row['date']."></div>";
 						echo "<br>";
-						echo "Priority: <select name='Priority'>";
-						echo "<option value='Low'>Low</option>";
-						echo "<option value='Medium'>Medium</option>";
-						echo "<option value='High'>High</option>";
-						echo "</select>";
-						echo "<br>";
-						echo "Due date: <input type='datetime-local' name='{$date}'>";
-						echo "<br>";
-						echo "<input type='hidden' name='task_id' value='" . $row['id']."'/>";
-						echo "<input type='submit' value='Update Task' name='submit'>";
-						echo "</form>";
+						echo "<input type='hidden' name='task_id' value='" . $_GET['id']."'/>";
+						echo "<input type='hidden' name='project_id' value='" . $_GET['project_id']."'/>";
+						echo "<input type='submit' value='Update' name='submit' class='create-task-button'>";
+						echo "</form></br></br>";
 					}
 				}
 				else {
@@ -106,6 +79,11 @@ if (!isset($_GET['id']) && empty($_GET['id']))
 			}
 			else {
 				echo "Could not execute the query.";
+			}
+			}
+			else
+			{
+				echo "<h2 class='error-msg'>⚠Some of the get parameters in the url are missing..</h2>";
 			}
 
 			echo "<br><a href='index.php' class='home_button'>🏠Return to homepage</a>";

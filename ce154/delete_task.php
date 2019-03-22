@@ -1,12 +1,6 @@
 <?php
 require ('db_connect.php');
 
-if (!isset($_GET['id']) && empty($_GET['id']))
-{
-	header('Location: index.php');
-	die();
-}
-
 ?>
 
 
@@ -26,27 +20,29 @@ if (!isset($_GET['id']) && empty($_GET['id']))
 		</h1>
 	</div>
 
-	<div class="left">
-		<p>
-			Area for buttons
-		</p>
-	</div>
-
 	<div class="content">
 		<?php
-
+		if (isset($_GET['project_id']) && isset($_GET['id']))
+		{
 			$sql = "DELETE FROM tasks WHERE id = '{$_GET['id']}'";
 			$result = mysqli_query($link,$sql);
 
 			if ($result)
 			{
 				echo "<h2 class='success-msg'>✅Task successfully deleted</h2>";
+				echo "Redirecting to the project page after 3 seconds.";
+				header('refresh: 3; url= index.php?project_id=' . $_GET['project_id']);
 			}
 			else
 			{
 				echo "<h2 class='error-msg'>⚠Could not delete task</h2>";
 			}
-			echo "<a href='index.php' class='home_button'>🏠Return to homepage</a>";
+		}
+		else
+		{
+			echo "<h2 class='error-msg'>⚠Some of the get parameters in the url are missing..</h2>";
+		}
+		echo "</br><a href='index.php' class='home_button'>🏠Return to homepage</a>";
 		?>
 	</div>
 
