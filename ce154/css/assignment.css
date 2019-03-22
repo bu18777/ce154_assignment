@@ -1,14 +1,39 @@
-html *
+body
 {
 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-weight: lighter;
 letter-spacing: 1.4px;
 text-align: center;
+margin: 0px 0px 0px 0px;
 }
-
+h1
+{
+  font-weight: lighter;
+}
+h2
+{
+  font-weight: lighter;
+}
+h3
+{
+  font-weight: lighter;
+}
 body
 {
   margin: 0px 0px 0px 0px;
+}
+
+.footer
+{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0px;
+  text-align: center;
+  position: fixed;
+  color: white;
+  background-color: #323232;
 }
 
 .header-title
@@ -157,5 +182,26 @@ li
   border: 2px;
   border-radius: 4px;
   border-color: #e02900;
+  border-style: solid;
+}
+
+.create-project-input
+{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: lighter;
+  letter-spacing: 1.4px;
+  height: 23px;
+}
+
+.create-project-button
+{
+  background-color: #04a542;
+  color: white;
+  padding: 6px 18px;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px;
+  border-radius: 4px;
+  border-color: #04a542;
   border-style: solid;
 }
